@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      All notes
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <button mat-button class='my-2'>
+      Add new note
+    </button>
+    <mat-list>
+      <mat-list-item *ngFor='let note of notes'>
+        <p mat-line><b>-{{ note.title }}</b> ({{ note.list.name }})</p>
+        <p mat-line><i>{{ note.body }}</i></p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

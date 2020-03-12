@@ -1,0 +1,9 @@
+<button mat-button class='my-2' (click)='onAdd()'>
+  Add new list
+</button>
+<mat-list>
+  <a mat-list-item href='#'>All notes</a>
+  <a mat-list-item href='#' *ngFor="let list of lists">
+    {{ list.name }}
+  </a>
+</mat-list>

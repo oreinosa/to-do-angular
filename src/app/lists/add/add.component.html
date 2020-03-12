@@ -1,0 +1,17 @@
+<button mat-button (click)='onBack()'>
+  Back
+</button>
+<div class="error-container" *ngIf='errorMessage'>
+  {{errorMessage}}
+</div>
+<div class="form-container my-2">
+  <form #f='ngForm' (ngSubmit)='onSubmit(list)'>
+    <mat-form-field class="full-width">
+      <mat-label>List name</mat-label>
+      <input matInput type="text" [(ngModel)]='list.name' name='name' required>
+    </mat-form-field>
+    <button mat-button type='submit'>
+      Add
+    </button>
+  </form>
+</div>

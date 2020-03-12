@@ -1,0 +1,48 @@
+<div class="register-container">
+  <div class="row">
+    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+      <mat-card class='p-5'>
+        <h2 class="text-center">
+          Register a To-Do account
+        </h2>
+        <div class="form-container my-5">
+          <form #f='ngForm' (ngSubmit)='onSubmit(register)'>
+            <mat-form-field class="full-width">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" [(ngModel)]='register.name' name='name' required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Email address</mat-label>
+              <input matInput type="email" [(ngModel)]='register.email' name='email' required email>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" [(ngModel)]='register.password' name='password' required>
+            </mat-form-field>
+            <div class='text-center'>
+              <button mat-button type='submit' class='px-5' [disabled]='f.invalid || loading'>
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="error-container text-center text-danger" *ngIf='errorMessage'>
+          {{ errorMessage }}
+        </div>
+        <hr>
+        <div class="text-center">
+          <a routerLink="/forgot-password">
+            <h5>
+              Forgot your password?
+            </h5>
+          </a>
+          <a routerLink="/login">
+            <h5>
+              You already have an account? Sign in now
+            </h5>
+          </a>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
