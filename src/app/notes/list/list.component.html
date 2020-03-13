@@ -1,10 +1,10 @@
 <button mat-button class='my-2' (click)='onAdd()'>
   Add a note
 </button>
-<mat-list>
-  <mat-list-item *ngFor='let note of notes'>
-    <h6 mat-line><b>{{ note.title }}</b> ({{ note.list.name }})</h6>
-    <p mat-line><i>{{ note.body }}</i></p>
-    <p>Created at {{ note.createdAt | date }}</p>
-  </mat-list-item>
-</mat-list>
+<div class='notes-container'>  
+  <ng-container *ngFor='let note of notes'>
+    <h4><b>{{ note.title }}</b> ({{ note.list.name }})</h4>
+    <p><i>{{ note.body }}</i></p>
+    <p><i>Created at {{ note.createdAt | date }}</i></p>
+  </ng-container>
+</div>

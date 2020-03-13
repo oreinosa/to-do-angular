@@ -16,8 +16,19 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onAdd() {
-    this.listsService.setAction('add');
+  private onAction(list: List) {
+    console.log('selected ', list);
+    this.listsService.setList(list);
+  }
+
+  onUpdate(list: List) {
+    this.onAction(list);
+    this.listsService.setAction('update');
+  }
+
+  onDelete(list: List) {
+    this.onAction(list);
+    this.listsService.setAction("delete");
   }
 
 }

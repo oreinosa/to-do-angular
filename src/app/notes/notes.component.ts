@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Note } from '../shared/models/note';
 import { NotesService } from './notes.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { List } from '../shared/models/list';
 import { ListsService } from '../lists/lists.service';
@@ -14,7 +14,7 @@ import { ListsService } from '../lists/lists.service';
 export class NotesComponent implements OnInit {
   lists$: Observable<List[]>;
   action$: Observable<string>;
-  notes: Note[];
+  notes$: Observable<Note[]>;
   constructor(
     private notesService: NotesService,
     private listsService: ListsService
@@ -24,21 +24,17 @@ export class NotesComponent implements OnInit {
     this.action$ = this.notesService.getAction().pipe(
       tap(action => {
         if (action === "list") {
-          this.getNotes();
+          // this.getNotes();
         }
       })
     );
-
-    this.lists$ = this.listsService.getLists();
+    this.notes$ = this.notesService.getNotesObservable();
+    this.lists$ = this.listsService.getListsObservable();
+    this.getNotes();
   }
 
-  async getNotes() {
-    try {
-      this.notes = await this.notesService.getAll();
-      console.log(this.notes);
-    } catch (e) {
-      console.log(e);
-    }
+  getNotes() {
+    this.notesService.getAll();
   }
 
 

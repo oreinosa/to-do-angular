@@ -11,7 +11,8 @@ import { tap } from 'rxjs/operators';
 })
 export class ListsComponent implements OnInit {
   action$: Observable<string>;
-  lists: List[];
+  lists$: Observable<List[]>;
+  list$:Observable<List>;
   constructor(
     private listsService: ListsService
   ) { }
@@ -20,19 +21,25 @@ export class ListsComponent implements OnInit {
     this.action$ = this.listsService.getAction().pipe(
       tap(action => {
         if (action === "list") {
-          this.getLists();
+          // this.getLists();
         }
       })
     );
+    this.lists$ = this.listsService.getListsObservable();
+    this.list$ = this.listsService.getListObservable();
+    this.getLists();
   }
 
-  async getLists() {
-    try {
-      this.lists = await this.listsService.getAll();
-      console.log(this.lists);
-    } catch (e) {
-      console.log(e);
-    }
+  getLists() {
+    this.listsService.getAll();
   }
 
+  onAdd() {
+    this.listsService.setAction("add");
+  }
+
+  onBack() {
+    this.listsService.setList(null);
+    this.listsService.setAction("list");
+  }
 }

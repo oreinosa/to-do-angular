@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Note } from '../shared/models/note';
 
 @Injectable({
@@ -12,11 +12,17 @@ export class NotesService {
   private actionSubject = new BehaviorSubject("list");
   private api = environment.api;
   private endpoint = 'notes';
+  private notesSubject = new BehaviorSubject<Note[]>([]);
+
   constructor(
     private http: HttpClient
   ) { }
 
-  getAction() {
+  getNotesObservable(): Observable<Note[]> {
+    return this.notesSubject.asObservable();
+  }
+
+  getAction(): Observable<string> {
     return this.actionSubject.asObservable();
   }
 
@@ -24,13 +30,20 @@ export class NotesService {
     this.actionSubject.next(action);
   }
 
-  getAll() {
-    return this.http
-      .get(`${this.api}/${this.endpoint}`)
-      .pipe(
-        map((res: any) => res.data as Note[]),
-      )
-      .toPromise();
+  async getAll() {
+    try {
+      const notes = await this.http
+        .get(`${this.api}/${this.endpoint}`)
+        .pipe(
+          map((res: any) => res.data as Note[]),
+        )
+        .toPromise();
+      this.notesSubject.next(notes);
+    } catch (e) {
+      console.log(e);
+      this.notesSubject.next([]);
+    }
+
   }
 
   create(Note: Note) {
@@ -38,6 +51,7 @@ export class NotesService {
       .post(`${this.api}/${this.endpoint}`, Note)
       .pipe(
         map((res: any) => res.data as Note),
+        tap(note => this.notesSubject.next([...this.notesSubject.value, note]))
       )
       .toPromise();
   }
@@ -50,7 +64,7 @@ export class NotesService {
       )
       .toPromise();;
   }
-  
+
   delete(id: string) {
     return this.http
       .delete(`${this.api}/${this.endpoint}/${id}`)

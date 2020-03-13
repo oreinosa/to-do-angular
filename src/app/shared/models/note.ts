@@ -5,4 +5,5 @@ export interface Note {
   body?: string;
   list?: List;
   createdAt?: any;
+  listId?: string;
 }

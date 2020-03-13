@@ -7,10 +7,10 @@
   <mat-card-content>
     <ng-container [ngSwitch]='action$ | async'>
       <ng-container *ngSwitchCase='"list"'>
-        <app-list [notes]='notes'></app-list>
+        <app-list [notes]='notes$ | async'></app-list>
       </ng-container>
       <ng-container *ngSwitchCase='"add"'>
-        <app-add [lists]='lists | async'></app-add>
+        <app-add [lists]='lists$ | async'></app-add>
       </ng-container>
       <ng-container *ngSwitchCase='"update"'>
         <app-update></app-update>

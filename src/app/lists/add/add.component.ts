@@ -16,17 +16,13 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  onBack() {
-    this.listsService.setAction('list');
-  }
-
   async onSubmit(list: List) {
     try {
       const createdList = await this.listsService.create(list);
       this.listsService.setAction("list");
     } catch (e) {
       console.log(e);
+      this.errorMessage = e;
     }
   }
 
