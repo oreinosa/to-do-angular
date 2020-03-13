@@ -15,6 +15,6 @@ import { ListComponent } from './list/list.component';
     SharedModule,
     ListsRoutingModule
   ],
-  exports: [ListsComponent, AddComponent, DeleteComponent, UpdateComponent]
+  exports: [ListsComponent]
 })
 export class ListsModule { }

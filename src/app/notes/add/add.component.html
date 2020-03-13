@@ -1,1 +1,29 @@
-<p>add works!</p>
+<button mat-button (click)='onBack()'>
+  Back
+</button>
+<div class="error-container" *ngIf='errorMessage'>
+  {{errorMessage}}
+</div>
+<div class="form-container my-2">
+  <form #f='ngForm' (ngSubmit)='onSubmit(note)'>
+    <mat-form-field class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" [(ngModel)]='note.title' name='title' required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Note</mat-label>
+      <input matInput type="text" [(ngModel)]='note.body' name='body' required>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>List ID</mat-label>
+      <mat-select>
+        <mat-option *ngFor='let list of lists' [value]='list._id'>
+          {{ list.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button type='submit'>
+      Add
+    </button>
+  </form>
+</div>
