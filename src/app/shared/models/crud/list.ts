@@ -1,4 +1,4 @@
-import {  Input } from '@angular/core';
+import { Input } from '@angular/core';
 import { DAO } from './dao';
 
 export class List<T>  {
@@ -11,5 +11,13 @@ export class List<T>  {
     this.dao.setAction('add');
   }
 
+  onUpdate(object: T) {
+    this.dao.setObject(object);
+    this.dao.setAction('update');
+  }
+  onDelete(object: T) {
+    this.dao.setObject(object);
+    this.dao.setAction('remove');
+  }
 
 }
