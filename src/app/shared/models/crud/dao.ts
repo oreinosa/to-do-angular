@@ -12,7 +12,7 @@ export class DAO<T> {
   constructor(
     public http: HttpClient,
     public collectionName: string,
-    public docName: string
+    public documentName: string,
   ) { }
 
   onBack() {
