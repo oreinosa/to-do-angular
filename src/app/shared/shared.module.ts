@@ -24,9 +24,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [CapitalizePipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -77,7 +78,8 @@ import { FormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CapitalizePipe
   ]
 })
 export class SharedModule { }
