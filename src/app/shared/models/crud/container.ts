@@ -23,6 +23,10 @@ export class Container<T> {
     this.getLists();
   }
 
+  get collectionName(): string {
+    return this.dao.collectionName;
+  }
+
   getLists() {
     this.dao.getAll();
   }
