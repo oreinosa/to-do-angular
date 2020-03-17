@@ -8,6 +8,13 @@ export class Remove<T>   {
     private dao: DAO<T>
   ) { }
 
+  get collectionName(): string {
+    return this.dao.collectionName;
+  }
+  get documentName(): string {
+    return this.dao.documentName;
+  }
+
   async onDelete() {
     try {
       await this.dao.delete(this.object["_id"]);
@@ -22,7 +29,4 @@ export class Remove<T>   {
     this.dao.onBack();
   }
 
-  get docName() {
-    return this.dao.docName;
-  }
 }
