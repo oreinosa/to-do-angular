@@ -1,29 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ListsService } from '../lists.service';
 import { List } from 'src/app/shared/models/list';
+import { Add } from '../../shared/models/crud/add';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
-export class AddComponent implements OnInit {
-  list: List = {};
-  errorMessage = "";
-  constructor(
-    private listsService: ListsService
-  ) { }
+export class AddComponent extends Add<List> {
 
-  ngOnInit(): void {
+  constructor(
+    public listsService: ListsService
+  ) {
+    super(listsService);
   }
-  async onSubmit(list: List) {
-    try {
-      const createdList = await this.listsService.create(list);
-      this.listsService.setAction("list");
-    } catch (e) {
-      console.log(e);
-      this.errorMessage = e;
-    }
+  initObject(): void {
+    this.object = {
+
+    };
   }
 
 }

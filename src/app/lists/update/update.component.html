@@ -2,10 +2,10 @@
   {{errorMessage}}
 </div>
 <div class="form-container my-2">
-  <form #f='ngForm' (ngSubmit)='onSubmit(list)'>
+  <form #f='ngForm' (ngSubmit)='onSubmit(object)'>
     <mat-form-field class="full-width">
       <mat-label>List name</mat-label>
-      <input matInput type="text" [(ngModel)]='list.name' name='name' required>
+      <input matInput type="text" [(ngModel)]='object.name' name='name' required  autocomplete="off">
     </mat-form-field>
     <button mat-button type='submit'>
       Update

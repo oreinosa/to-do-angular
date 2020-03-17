@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NotesService } from '../notes.service';
+import { Note } from 'src/app/shared/models/note';
+import { Remove } from '../../shared/models/crud/remove';
 
 @Component({
   selector: 'app-delete',
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.scss']
 })
-export class DeleteComponent implements OnInit {
+export class DeleteComponent extends Remove<Note> {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    public notesService: NotesService
+  ) {
+    super(notesService);
   }
 
 }

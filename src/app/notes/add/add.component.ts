@@ -1,36 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotesService } from '../notes.service';
 import { Note } from 'src/app/shared/models/note';
-import { List } from 'src/app/shared/models/list';
+import { Add } from '../../shared/models/crud/add';
+import { List } from '../../shared/models/list';
+import { Observable } from 'rxjs';
+import { ListsService } from '../../lists/lists.service';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
-export class AddComponent implements OnInit {
-  @Input() lists: List[];
-  note: Note = {};
-  errorMessage = "";
+export class AddComponent extends Add<Note> implements OnInit {
+
+  lists$: Observable<List[]>;
   constructor(
-    private notesService: NotesService
-  ) { }
-
+    public notesService: NotesService,
+    public listsService: ListsService
+  ) {
+    super(notesService);
+  }
   ngOnInit(): void {
-    console.log(this.lists);
+    this.lists$ = this.listsService.getAllObservable();
   }
+  initObject(): void {
+    this.object = {
 
-  onBack() {
-    this.notesService.setAction('list');
-  }
-
-  async onSubmit(note: Note) {
-    try {
-      const createdList = await this.notesService.create(note);
-      this.notesService.setAction("list");
-    } catch (e) {
-      console.log(e);
-    }
+    };
   }
 
 }

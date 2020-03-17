@@ -1,24 +1,21 @@
-<button mat-button (click)='onBack()'>
-  Back
-</button>
 <div class="error-container" *ngIf='errorMessage'>
   {{errorMessage}}
 </div>
 <div class="form-container my-2">
-  <form #f='ngForm' (ngSubmit)='onSubmit(note)'>
+  <form #f='ngForm' (ngSubmit)='onSubmit(object)'>
     <mat-form-field class="full-width">
       <mat-label>Title</mat-label>
-      <input matInput type="text" [(ngModel)]='note.title' name='title' required>
+      <input matInput type="text" [(ngModel)]='object.title' name='title' required  autocomplete="off">
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Note</mat-label>
-      <textarea matInput rows='4' [(ngModel)]='note.body' name='body' required>
-      </textarea>
+      <textarea matInput rows='4' [(ngModel)]='object.body' name='body' required>
+            </textarea>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>List</mat-label>
-      <mat-select [(ngModel)]='note.listId' name='listId' required>
-        <mat-option *ngFor='let list of lists' [value]='list._id'>
+      <mat-select [(ngModel)]='object.listId' name='listId' required>
+        <mat-option *ngFor='let list of lists$ | async' [value]='list._id'>
           {{ list.name }}
         </mat-option>
       </mat-select>

@@ -1,1 +1,10 @@
-<p>delete works!</p>
+<div class="error-container" *ngIf='errorMessage'>
+  {{errorMessage}}
+</div>
+<p>Do you want to delete {{ documentName }} {{ object?._id }}?</p>
+<button mat-button (click)='onDelete()'>
+  Yes
+</button>
+<button mat-button (click)='onBack()'>
+  No
+</button>

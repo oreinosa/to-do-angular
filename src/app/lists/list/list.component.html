@@ -1,25 +1,20 @@
-<div class="row">
-  <div class="col-12 my-2">
-    <div class="row">
-      <ng-container *ngFor='let list of lists'>
-        <div class="col-6">
-          <button mat-button class='name full-width'>
-            {{ list.name }}
-          </button>
-        </div>
-        <div class="col-3">
-          <button mat-icon-button class='update' (click)='onUpdate(list)'>
-            <mat-icon>update</mat-icon>
-          </button>
-        </div>
-        <div class="col-3">
-          <button mat-icon-button class='delete' (click)='onDelete(list)'>
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-        <div class="w-100 mb-2"></div>
-      </ng-container>
+<div class="row my-2">
+  <ng-container *ngFor='let object of all'>
+    <div class="col-9">
+      <button mat-button class='name full-width'>
+        {{ object.name }}
+      </button>
     </div>
-
-  </div>
+    <!-- <div class="col-3">
+      <button mat-icon-button class='update' (click)='onUpdate(object)'>
+        <mat-icon>update</mat-icon>
+      </button>
+    </div> -->
+    <div class="col-3">
+      <button mat-icon-button class='delete' (click)='onDelete(object)'>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <div class="w-100 mb-2"></div>
+  </ng-container>
 </div>

@@ -1,26 +1,28 @@
 <mat-card color='accent'>
   <mat-card-header>
     <mat-card-title>
-      Lists
+      {{ collectionName | capitalize}}
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <hr>
     <ng-container *ngIf='action$ | async as action'>
-      <button mat-button (click)='action === "list" ? onAdd():onBack()' class='my-2'>
+      <button mat-button (click)='action === "list" ? onAdd():onBack()' class=''>
         {{ action === "list" ? "Add list" : "Back" }}
       </button>
+      <hr>
       <ng-container [ngSwitch]='action'>
         <ng-container *ngSwitchCase='"list"'>
-          <app-list [lists]='lists$ | async'></app-list>
+          <app-list [all]='all$ | async'></app-list>
         </ng-container>
         <ng-container *ngSwitchCase='"add"'>
           <app-add></app-add>
         </ng-container>
-        <ng-container *ngSwitchCase='"update"' >
-          <app-update [list]='list$ | async'></app-update>
+        <ng-container *ngSwitchCase='"update"'>
+          <app-update [object]='object$ | async'></app-update>
         </ng-container>
-        <ng-container *ngSwitchCase='"delete"'>
-          <app-delete [list]='list$ | async'></app-delete>
+        <ng-container *ngSwitchCase='"remove"'>
+          <app-delete [object]='object$ | async'></app-delete>
         </ng-container>
       </ng-container>
     </ng-container>

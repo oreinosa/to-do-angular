@@ -1,10 +1,38 @@
-<button mat-button class='my-2' (click)='onAdd()'>
-  Add a note
-</button>
-<div class='notes-container'>  
-  <ng-container *ngFor='let note of notes'>
-    <h4><b>{{ note.title }}</b> ({{ note.list.name }})</h4>
-    <p><i>{{ note.body }}</i></p>
-    <p><i>Created at {{ note.createdAt | date }}</i></p>
+<div class="row my-2">
+  <ng-container *ngFor='let object of all'>
+    <div class="col-6">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <b>{{ object.title }}</b>
+          </mat-card-title>
+          <mat-card-subtitle>
+            ({{ object.list.name }})
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class='my-2'>
+            <i>
+              {{ object.body }}
+            </i>
+          </p>
+          <p>
+            <i>Created at {{ object.createdAt | date:"medium" }}</i>
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-icon-button (click)='onUpdate(object)'>
+            <mat-icon>
+              update
+            </mat-icon>
+          </button>
+          <button mat-icon-button (click)='onDelete(object)'>
+            <mat-icon>
+              delete
+            </mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </ng-container>
 </div>

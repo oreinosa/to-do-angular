@@ -1,1 +1,14 @@
-<p>update works!</p>
+<div class="error-container" *ngIf='errorMessage'>
+  {{errorMessage}}
+</div>
+<div class="form-container my-2">
+  <form #f='ngForm' (ngSubmit)='onSubmit(object)'>
+    <mat-form-field class="full-width">
+      <mat-label>Body</mat-label>
+      <input matInput type="text" [(ngModel)]='object.body' name='body' required  autocomplete="off">
+    </mat-form-field>
+    <button mat-button type='submit'>
+      Update
+    </button>
+  </form>
+</div>

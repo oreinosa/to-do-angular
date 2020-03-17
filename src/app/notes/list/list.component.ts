@@ -1,24 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NotesService } from '../notes.service';
+import { List } from './../../shared/models/crud/list';
+import { Component, } from '@angular/core';
 import { Note } from 'src/app/shared/models/note';
+import { NotesService } from '../notes.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
-  @Input() notes: Note[];
+export class ListComponent extends List<Note> {
   constructor(
-    private notesService: NotesService
-  ) { }
-
-  ngOnInit(): void {
+    public notesService: NotesService
+  ) {
+    super(notesService);
   }
-
-  onAdd() {
-    this.notesService.setAction('add');
-  }
-
 
 }
