@@ -20,11 +20,7 @@ export class AppComponent {
     this.user$ = this.auth.getUser();
   }
 
-  async onLogout() {
-    try {
-      await this.auth.logout();
-    } catch (e) {
-      console.log(e);
-    }
+  onLogout() {
+    this.auth.logout();
   }
 }

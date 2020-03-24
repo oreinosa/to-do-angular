@@ -70,15 +70,8 @@ export class AuthService {
   }
 
   logout() {
-    return this.http
-      .post(`${this.api}/auth/logout`, {})
-      .pipe(
-        tap(() => {
-          this.setToken(null);
-          this.setup(null);
-        })
-      )
-      .toPromise();
+    this.setToken(null);
+    this.setup(null);
   }
 
   register(register: Register) {
