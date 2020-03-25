@@ -1,5 +1,5 @@
 import { Container } from './../shared/models/crud/container';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Note } from '../shared/models/note';
 import { NotesService } from './notes.service';
 
@@ -9,10 +9,10 @@ import { NotesService } from './notes.service';
   styleUrls: ['./notes.component.scss']
 })
 export class NotesComponent extends Container<Note> {
+
   constructor(
-    public notesService: NotesService
+    public notesService: NotesService,
   ) {
     super(notesService);
   }
-
 }

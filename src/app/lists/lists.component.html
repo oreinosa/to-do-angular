@@ -7,22 +7,21 @@
   <mat-card-content>
     <hr>
     <ng-container *ngIf='action$ | async as action'>
-      <button mat-button (click)='action === "list" ? onAdd():onBack()' class=''>
+      <button mat-button (click)='action === "list" ? onAdd():onBack()' class='mb-2'>
         {{ action === "list" ? "Add list" : "Back" }}
       </button>
-      <hr>
       <ng-container [ngSwitch]='action'>
         <ng-container *ngSwitchCase='"list"'>
-          <app-list [all]='all$ | async'></app-list>
+          <app-list></app-list>
         </ng-container>
         <ng-container *ngSwitchCase='"add"'>
           <app-add></app-add>
         </ng-container>
         <ng-container *ngSwitchCase='"update"'>
-          <app-update [object]='object$ | async'></app-update>
+          <app-update></app-update>
         </ng-container>
         <ng-container *ngSwitchCase='"remove"'>
-          <app-delete [object]='object$ | async'></app-delete>
+          <app-delete></app-delete>
         </ng-container>
       </ng-container>
     </ng-container>

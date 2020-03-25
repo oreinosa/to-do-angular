@@ -7,13 +7,13 @@
   <mat-card-content>
     <hr>
     <ng-container *ngIf='action$ | async as action'>
-      <button mat-button (click)='action === "list" ? onAdd():onBack()' class=''>
+      <button mat-button (click)='action === "list" ? onAdd():onBack()' class='mb-3'>
+        <mat-icon>assignment</mat-icon>
         {{ action === "list" ? "New note" : "Back" }}
       </button>
-      <hr>
       <ng-container [ngSwitch]='action'>
         <ng-container *ngSwitchCase='"list"'>
-          <app-list [all]='all$ | async'></app-list>
+          <app-list></app-list>
         </ng-container>
         <ng-container *ngSwitchCase='"add"'>
           <app-add></app-add>

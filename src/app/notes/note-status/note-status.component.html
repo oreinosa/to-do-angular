@@ -1,0 +1,13 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>
+    {{ statusesMap[status] }}
+  </mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item *ngFor='let key of statuses' (click)='onSelect(key)'>
+    <mat-icon>
+      {{ statusesMap[key] }}
+    </mat-icon>
+    {{ key }}
+  </button>
+</mat-menu>

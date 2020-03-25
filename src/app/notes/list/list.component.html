@@ -1,36 +1,53 @@
+<div class='pl-3 mb-2' *ngIf='!loading'>
+  <h4>Status</h4>
+  <mat-radio-group aria-label="Select an option" [(ngModel)]='selectedStatus' name='selectedStatus'
+    (change)='onSelectStatus(selectedStatus)'>
+    <mat-radio-button *ngFor='let status of statuses' class='mr-3' [value]='status'>
+      <span>
+        {{ status }}
+      </span>
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
 <div class="row my-2">
-  <ng-container *ngFor='let object of all'>
-    <div class="col-6">
+  <ng-container *ngIf='loading'>
+    <div class="col-12">
+      <mat-spinner class='mx-auto' diameter='35'></mat-spinner>
+    </div>
+  </ng-container>
+  <ng-container *ngFor='let note of all$ | async'>
+    <div class="col-12 col-md-6 mb-2">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
-            <b>{{ object.title }}</b>
+            <b>{{ note.title }}</b>
           </mat-card-title>
           <mat-card-subtitle>
-            ({{ object.list.name }})
+            ({{ note.list.name }})
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <p class='my-2'>
             <i>
-              {{ object.body }}
+              {{ note.body }}
             </i>
           </p>
           <p>
-            <i>Created at {{ object.createdAt | date:"medium" }}</i>
+            <i>Created at {{ note.createdAt | date:"medium" }}</i>
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-icon-button (click)='onUpdate(object)'>
+          <button mat-icon-button (click)='onUpdate(note)'>
             <mat-icon>
               update
             </mat-icon>
           </button>
-          <button mat-icon-button (click)='onDelete(object)'>
+          <button mat-icon-button (click)='onDelete(note)'>
             <mat-icon>
               delete
             </mat-icon>
           </button>
+          <app-note-status [status]='note.status' (selectStatus)='onUpdateStatus(note, $event)'></app-note-status>
         </mat-card-actions>
       </mat-card>
     </div>

@@ -7,4 +7,5 @@ export interface Note {
   list?: List;
   createdAt?: any;
   listId?: string;
+  status?: string;
 }

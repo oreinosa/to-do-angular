@@ -4,8 +4,6 @@ import { tap } from 'rxjs/operators';
 
 export class Container<T> {
   action$: Observable<string>;
-  all$: Observable<T[]>;
-  object$: Observable<T>;
   constructor(
     private dao: DAO<T>
   ) { }
@@ -18,17 +16,11 @@ export class Container<T> {
         }
       })
     );
-    this.all$ = this.dao.getAllObservable();
-    this.object$ = this.dao.getObjectObservable();
-    this.getLists();
+
   }
 
   get collectionName(): string {
     return this.dao.collectionName;
-  }
-
-  getLists() {
-    this.dao.getAll();
   }
 
   onAdd() {

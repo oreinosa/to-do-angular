@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 export class DAO<T> {
   private actionSubject = new BehaviorSubject("list");
-  private api = environment.api;
+  api = environment.api;
 
-  private allSubject = new BehaviorSubject<T[]>([]);
+  private allSubject = new BehaviorSubject<T[]>(null);
   private objectSubject = new BehaviorSubject<T>(null);
 
   constructor(
@@ -45,9 +45,9 @@ export class DAO<T> {
         .get(`${this.api}/${this.collectionName}`)
         .pipe(
           map((res: any) => res.data as T[]),
-      )
+        )
         .toPromise();
-      console.log(all);
+      console.log(`${this.collectionName} => `, all);
       this.allSubject.next(all);
     } catch (e) {
       console.log(e);
@@ -65,15 +65,16 @@ export class DAO<T> {
       .toPromise();
   }
 
-  update(id: string, note: T) {
+  update(id: string, note: T, params?: HttpParams) {
     return this.http
-      .put(`${this.api}/${this.collectionName}/${id}`, note)
+      .put(`${this.api}/${this.collectionName}/${id}`, note, { params })
       .pipe(
         map((res: any) => res.data as T),
         tap(note => this.allSubject.next([...this.allSubject.value.map(_object => _object["_id"] === id ? note : _object)]))
       )
-      .toPromise();;
+      .toPromise();
   }
+
   delete(id: string) {
     return this.http
       .delete(`${this.api}/${this.collectionName}/${id}`)
