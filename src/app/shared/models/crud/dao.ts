@@ -1,9 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 export class DAO<T> {
   private actionSubject = new BehaviorSubject("list");
+  private loadingSubject = new BehaviorSubject(false);
   api = environment.api;
 
   private allSubject = new BehaviorSubject<T[]>(null);
@@ -13,11 +15,17 @@ export class DAO<T> {
     public http: HttpClient,
     public collectionName: string,
     public documentName: string,
+    public router: Router
   ) { }
 
   onBack() {
     this.setObject(null);
     this.setAction("list");
+    this.router.navigate(['/']);
+  }
+
+  getLoadingObservable(): Observable<boolean> {
+    return this.loadingSubject.asObservable();
   }
 
   getAllObservable(): Observable<T[]> {
@@ -41,6 +49,7 @@ export class DAO<T> {
 
   async getAll() {
     try {
+      this.loadingSubject.next(true);
       const all = await this.http
         .get(`${this.api}/${this.collectionName}`)
         .pipe(
@@ -52,6 +61,8 @@ export class DAO<T> {
     } catch (e) {
       console.log(e);
       this.allSubject.next([]);
+    } finally {
+      this.loadingSubject.next(false);
     }
   }
 

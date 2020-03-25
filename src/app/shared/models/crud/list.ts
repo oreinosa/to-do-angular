@@ -4,20 +4,14 @@ import { Observable } from 'rxjs';
 
 export class List<T>  {
   all$: Observable<T[]>;
-  loading = false;
+  loading$: Observable<boolean>;
   constructor(
     private dao: DAO<T>
   ) { }
 
   ngOnInit() {
     this.all$ = this.dao.getAllObservable();
-    this.getAll();
-  }
-
-  async getAll() {
-    this.loading = true;
-    await this.dao.getAll();
-    this.loading = false;
+    this.loading$ = this.dao.getLoadingObservable();
   }
 
   onAdd() {
