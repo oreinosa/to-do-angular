@@ -1,12 +1,17 @@
-import { Input } from '@angular/core';
+import { Input, OnInit } from '@angular/core';
 import { DAO } from './dao';
+import { Observable } from 'rxjs';
 
-export class Remove<T>   {
-  @Input() object: T;
+export class Remove<T> implements OnInit {
+  object$: Observable<T>
   errorMessage = "";
   constructor(
     private dao: DAO<T>
   ) { }
+
+  ngOnInit() {
+    this.object$ = this.dao.getObjectObservable();
+  }
 
   get collectionName(): string {
     return this.dao.collectionName;
@@ -15,9 +20,9 @@ export class Remove<T>   {
     return this.dao.documentName;
   }
 
-  async onDelete() {
+  async onDelete(object: T) {
     try {
-      await this.dao.delete(this.object["_id"]);
+      await this.dao.delete(object["_id"]);
       this.onBack();
     } catch (e) {
       console.log(e);

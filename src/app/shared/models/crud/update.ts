@@ -1,15 +1,20 @@
-import { Input } from '@angular/core';
+import { Input, OnInit } from '@angular/core';
 import { DAO } from './dao';
-export class Update<T> {
-  @Input() object: T;
+import { Observable } from 'rxjs';
+export class Update<T> implements OnInit {
+  object$: Observable<T>;
   errorMessage = "";
   constructor(
     private dao: DAO<T>
   ) { }
 
+  ngOnInit() {
+    this.object$ = this.dao.getObjectObservable();
+  }
+
   async onSubmit(object: T) {
     try {
-      const updatedList = await this.dao.update(this.object["_id"], object);
+      const updatedList = await this.dao.update(object["_id"], object);
       this.onBack();
     } catch (e) {
       console.log(e);
