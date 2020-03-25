@@ -9,7 +9,7 @@ export class NoteStatusComponent {
   @Input() status: string = 'New';
   @Output("selectStatus") statusEmitter = new EventEmitter<string>();
   statusesMap = STATUSES_MAP;
-  statuses = STATUSES;
+  statuses = STATUSES.filter(status => status !== "New");
 
   onSelect(status: string) {
     console.log(status);

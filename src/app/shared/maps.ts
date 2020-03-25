@@ -7,7 +7,7 @@ export const STATUSES_MAP = {
 
 export const STATUSES = [
   "New",
-  "In Progress",
+  "In progress",
   "Completed",
   "Archived"
 ];
