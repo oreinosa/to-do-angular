@@ -1,55 +1,61 @@
-<div class='pl-3 mb-2' *ngIf='!loading'>
-  <h4>Status</h4>
-  <mat-radio-group aria-label="Select an option" [(ngModel)]='selectedStatus' name='selectedStatus'
-    (change)='onSelectStatus(selectedStatus)'>
-    <mat-radio-button *ngFor='let status of statuses' class='mr-3' [value]='status'>
-      <span>
-        {{ status }}
-      </span>
-    </mat-radio-button>
-  </mat-radio-group>
-</div>
-<div class="row my-2">
-  <ng-container *ngIf='loading'>
+<div class="row">
+  <ng-container *ngIf='loading$ | async;else showList'>
     <div class="col-12">
       <mat-spinner class='mx-auto' diameter='35'></mat-spinner>
     </div>
   </ng-container>
-  <ng-container *ngFor='let note of all$ | async'>
-    <div class="col-12 col-md-6 mb-2">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <b>{{ note.title }}</b>
-          </mat-card-title>
-          <mat-card-subtitle>
-            ({{ note.list.name }})
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p class='my-2'>
-            <i>
-              {{ note.body }}
-            </i>
-          </p>
-          <p>
-            <i>Created at {{ note.createdAt | date:"medium" }}</i>
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-icon-button (click)='onUpdate(note)'>
-            <mat-icon>
-              update
-            </mat-icon>
-          </button>
-          <button mat-icon-button (click)='onDelete(note)'>
-            <mat-icon>
-              delete
-            </mat-icon>
-          </button>
-          <app-note-status [status]='note.status' (selectStatus)='onUpdateStatus(note, $event)'></app-note-status>
-        </mat-card-actions>
-      </mat-card>
+  <ng-template #showList>
+    <div class='col-12 pl-4 mb-2'>
+      <h4 class='d-inline-block mr-3'>Status</h4>
+      <button mat-raised-button (click)='selectedStatusCtrl.patchValue(null)' [disabled]='!selectedStatusCtrl.value'>
+        Any status
+      </button>
+      <div class="w-100 mb-2"></div>
+      <mat-radio-group aria-label="Select an option" [formControl]='selectedStatusCtrl'>
+        <mat-radio-button *ngFor='let status of statuses' class='mr-3' [value]='status'>
+          <span>
+            {{ status }}
+          </span>
+        </mat-radio-button>
+      </mat-radio-group>
     </div>
-  </ng-container>
+    <ng-container *ngFor='let note of all$ | async'>
+      <div class="col-12 col-md-6 mb-2">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              <b>{{ note.title }}</b>
+            </mat-card-title>
+            <mat-card-subtitle>
+              ({{ note.list.name }})
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p class='my-2'>
+              <i>
+                {{ note.body }}
+              </i>
+            </p>
+            <p>
+              <i>Created at {{ note.createdAt | date:"medium" }}</i>
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button (click)='onUpdate(note)'>
+              <mat-icon>
+                update
+              </mat-icon>
+            </button>
+            <button mat-icon-button (click)='onDelete(note)'>
+              <mat-icon>
+                delete
+              </mat-icon>
+            </button>
+            <app-note-status [status]='note.status' (selectStatus)='onUpdateStatus(note, $event)'></app-note-status>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-container>
+  </ng-template>
+
 </div>

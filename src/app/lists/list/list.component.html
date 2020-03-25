@@ -1,27 +1,26 @@
 <div class="row my-2">
-  <ng-container *ngIf='loading'>
-    <div class="col-12">
-      <mat-spinner class='mx-auto' diameter='35'></mat-spinner>
-    </div>
-  </ng-container>
-  <ul class="list-unstyled pl-4">
+  <ul class="list-unstyled pl-4 col-12">
     <li class='pt-3'>
       <a class='name py-2' routerLink='/' (click)='onSelectList({name:"all"})'>
         <h4>All notes</h4>
       </a>
     </li>
-    <ng-container *ngIf='all$ | async as all;else isLoading'>
-      <li *ngFor='let object of all' class='pt-3'>
-        <a class='name d-inline-block pr-5 py-2' routerLink='/' (click)='onSelectList(object)'>
-          <h4>{{ object.name }}</h4>
-        </a>
-        <button mat-icon-button class='delete float-right' (click)='onDelete(object)'>
-          <mat-icon>delete</mat-icon>
-        </button>
+    <ng-container *ngIf='(loading$ | async);else showList'>
+      <li class="py-3">
+        <mat-spinner diameter='40' class='mx-auto'></mat-spinner>
       </li>
     </ng-container>
-    <ng-template #isLoading>
-      <mat-spinner></mat-spinner>
+    <ng-template #showList>
+      <ng-container *ngIf='all$ | async as all'>
+        <li *ngFor='let object of all' class='pt-3'>
+          <a class='name d-inline-block pr-5 py-2' routerLink='/' (click)='onSelectList(object)'>
+            <h4>{{ object.name }}</h4>
+          </a>
+          <button mat-icon-button class='delete float-right' (click)='onDelete(object)'>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </li>
+      </ng-container>
     </ng-template>
   </ul>
 </div>

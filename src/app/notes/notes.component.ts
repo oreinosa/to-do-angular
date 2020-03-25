@@ -8,11 +8,12 @@ import { NotesService } from './notes.service';
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.scss']
 })
-export class NotesComponent extends Container<Note> {
+export class NotesComponent extends Container<Note>  {
 
   constructor(
     public notesService: NotesService,
   ) {
     super(notesService);
   }
+
 }

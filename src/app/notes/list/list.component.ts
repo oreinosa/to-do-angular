@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { tap, switchMap, map, filter } from 'rxjs/operators';
 import { STATUSES } from 'src/app/shared/maps';
 import { HttpParams } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -14,10 +15,9 @@ import { HttpParams } from '@angular/common/http';
 })
 export class ListComponent extends List<Note> {
   statuses = STATUSES;
-  selectedStatus = "";
+  selectedStatusCtrl = new FormControl();
   allNotes = [];
   loading = false;
-  refresh = false;
   constructor(
     public notesService: NotesService,
     private route: ActivatedRoute,
@@ -27,6 +27,12 @@ export class ListComponent extends List<Note> {
   }
 
   ngOnInit() {
+    this.selectedStatusCtrl
+      .valueChanges
+      .subscribe(value => this.onSelectStatus(value));
+
+    this.loading$ = this.notesService.getLoadingObservable();
+
     this.all$ = this.notesService.getAllObservable()
       .pipe(
         filter(notes => !!notes?.length),
@@ -40,24 +46,22 @@ export class ListComponent extends List<Note> {
           let filteredNotes = [...this.allNotes];
           if (!!listName) {
             filteredNotes = filteredNotes.filter(note => note.list.name === listName);
-          } else {
-            console.log('selected status')
-            this.selectedStatus = "";
           }
           if (!!status) {
             filteredNotes = filteredNotes.filter(note => note.status === status);
           }
-          this.refresh = !this.refresh;
+          console.log("listName => ", listName);
+          console.log("status => ", status);
+          console.log("filteredNotes => ", filteredNotes);
           return filteredNotes;
         })
       );
-    this.getAll();
   }
 
   onSelectStatus(status: string) {
     const queryParams = {
       status: status || undefined
-    }
+    };
     this.router.navigate(['/'], { queryParams, queryParamsHandling: 'merge' })
   }
 
