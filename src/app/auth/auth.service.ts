@@ -108,7 +108,7 @@ export class AuthService {
       this.router.navigate(['/']);
     } catch (e) {
       console.log('Please login to have access');
-      this.router.navigate(['login']);
+      // this.router.navigate(['login']);
     }
   }
 }
